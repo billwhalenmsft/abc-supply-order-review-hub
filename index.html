@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en" class="share-gate-locked" data-brand-kit="mcaps-os-se-os/1.0.0">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" href="data:,">
+  <title>ABC Supply | Cowork learning and bounded pilot review</title>
+  <script>
+  (() => {
+    const param = new URLSearchParams(window.location.search).get("scoutTheme");
+    const theme =
+      param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+  <style>
+    html.share-gate-locked body > :not(.share-gate) { visibility: hidden !important; }
+  </style>
+  <script src="gate.js"></script>
+  <style>
+    :root {
+  color-scheme: light;
+  --cp-bg: #FFFFFF;
+  --cp-bg-elevated: #EAF3FF;
+  --cp-surface: #ffffff;
+  --cp-surface-soft: #EAF3FF;
+  --cp-border: #A9BDD6;
+  --cp-border-strong: #607D9F;
+  --cp-text: #142D4E;
+  --cp-text-muted: #345377;
+  --cp-text-soft: #425F82;
+  --cp-accent: #0057B8;
+  --cp-accent-hover: #003B7A;
+  --cp-accent-soft: rgba(0, 87, 184, 0.12);
+  --cp-accent-fg: #FFFFFF;
+  --cp-success: #127045;
+  --cp-danger: #9F2A2A;
+  --cp-warning: #7A5200;
+  --cp-link: #003B7A;
+  --cp-shadow: 0 12px 30px rgba(20, 45, 78, 0.12);
+  --cp-overlay: rgba(255, 255, 255, 0.92);
+  --cp-panel: rgba(255, 255, 255, 0.96);
+  --cp-panel-strong: #FFFFFF;
+  --cp-sheen: rgba(234, 243, 255, 0.80);
+  --cp-highlight: rgba(0, 87, 184, 0.10);
+}
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --cp-bg: #0D1E33;
+  --cp-bg-elevated: #102A48;
+  --cp-surface: #173655;
+  --cp-surface-soft: #1D4269;
+  --cp-border: #4F7095;
+  --cp-border-strong: #83A5CA;
+  --cp-text: #FFFFFF;
+  --cp-text-muted: #CADCF0;
+  --cp-text-soft: #B4CCE6;
+  --cp-accent: #78B7FF;
+  --cp-accent-hover: #A7D1FF;
+  --cp-accent-soft: rgba(120, 183, 255, 0.18);
+  --cp-accent-fg: #0D1E33;
+  --cp-success: #75D7A5;
+  --cp-danger: #FFAAAA;
+  --cp-warning: #FFD07A;
+  --cp-link: #9CC7FF;
+  --cp-shadow: 0 16px 36px rgba(0, 0, 0, 0.30);
+  --cp-overlay: rgba(13, 30, 51, 0.92);
+  --cp-panel: rgba(23, 54, 85, 0.96);
+  --cp-panel-strong: #173655;
+  --cp-sheen: rgba(255, 255, 255, 0.04);
+  --cp-highlight: rgba(120, 183, 255, 0.16);
+}
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--cp-bg);
+      color: var(--cp-text);
+      font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+    }
+    a {
+      color: var(--cp-accent);
+      text-underline-offset: 0.2rem;
+    }
+    a:hover { color: var(--cp-accent-hover); }
+    a:focus-visible,
+    button:focus-visible {
+      outline: 0.2rem solid var(--cp-accent);
+      outline-offset: 0.2rem;
+    }
+    .skip-link {
+      position: fixed;
+      top: 0.5rem;
+      left: 0.5rem;
+      z-index: 30;
+      transform: translateY(-220%);
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+      padding: 0.75rem 1rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .skip-link:focus { transform: translateY(0); }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 0.0625rem solid var(--cp-border);
+      background: var(--cp-panel-strong);
+      backdrop-filter: blur(0.75rem);
+    }
+    .wrap {
+      width: min(76rem, calc(100% - 2rem));
+      margin: 0 auto;
+    }
+    .header-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1rem 1.5rem;
+      padding: 0.9rem 0 1rem;
+    }
+    .brand-cluster,
+    .section-nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.55rem 1rem;
+    }
+    .brand-node {
+      display: inline-flex;
+      align-items: center;
+      min-height: 2rem;
+      padding: 0.3rem 0.7rem;
+      border: 0.0625rem solid var(--cp-border);
+      border-radius: 999px;
+      background: var(--cp-surface-soft);
+      color: var(--cp-text);
+      font-size: 0.94rem;
+      font-weight: 800;
+    }
+    .brand-separator { color: var(--cp-text-soft); font-weight: 700; }
+    .house-node { gap: 0.45rem; color: var(--cp-accent-hover); }
+    html[data-theme="dark"] .house-node { color: var(--cp-accent); }
+    .house-mark { width: 2rem; height: 2rem; flex: 0 0 auto; }
+    .house-wordmark { white-space: nowrap; }
+    .section-nav a {
+      min-height: 2.75rem;
+      display: inline-flex;
+      align-items: center;
+      padding: 0.45rem 0;
+      border-bottom: 0.1875rem solid transparent;
+      color: var(--cp-text-soft);
+      font-size: 0.92rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .section-nav a:hover,
+    .section-nav a:focus-visible {
+      color: var(--cp-accent-hover);
+      border-bottom-color: var(--cp-accent-hover);
+    }
+    .hero {
+      background: var(--cp-surface);
+      border-bottom: 0.5rem solid var(--cp-accent);
+    }
+    .hero-inner { padding: 2rem 0 1.75rem; }
+    .eyebrow {
+      margin: 0 0 0.55rem;
+      color: var(--cp-text-soft);
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3 { line-height: 1.2; overflow-wrap: anywhere; }
+    h1 { margin: 0 0 0.8rem; font-size: clamp(2rem, 4vw, 3.1rem); }
+    h2 { margin: 0 0 0.8rem; font-size: clamp(1.45rem, 3vw, 2rem); }
+    h3 { margin: 0 0 0.6rem; font-size: 1.1rem; }
+    p, li { overflow-wrap: anywhere; }
+    p { margin: 0 0 0.9rem; }
+    .hero-summary {
+      max-width: 60rem;
+      font-size: 1.05rem;
+      color: var(--cp-text-soft);
+    }
+    .cta-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2.9rem;
+      padding: 0.75rem 1rem;
+      margin-top: 1rem;
+      border: 0.0625rem solid var(--cp-accent);
+      border-radius: 0.8rem;
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+      font-weight: 800;
+      text-decoration: none;
+    }
+    .cta-link:hover {
+      background: var(--cp-accent-hover);
+      border-color: var(--cp-accent-hover);
+      color: var(--cp-accent-fg);
+    }
+    .meta-row,
+    .card-grid,
+    .checklist-grid,
+    .story-grid {
+      display: grid;
+      gap: 1rem;
+    }
+    .meta-row { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 1.2rem; }
+    .card-grid,
+    .checklist-grid,
+    .story-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .meta-box,
+    .card,
+    .story-card {
+      padding: 1rem 1.1rem;
+      border: 0.0625rem solid var(--cp-border);
+      border-radius: 1rem;
+      background: var(--cp-surface);
+      box-shadow: var(--cp-shadow);
+    }
+    .meta-box dt {
+      margin: 0 0 0.35rem;
+      color: var(--cp-text-soft);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .meta-box dd { margin: 0; }
+    .content-section {
+      padding: 2rem 0;
+      border-bottom: 0.0625rem solid var(--cp-border);
+    }
+    .content-section:nth-of-type(odd) { background: var(--cp-bg-elevated); }
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+      gap: 1rem 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .section-head p { color: var(--cp-text-soft); }
+    ul.tight,
+    ol.tight { margin: 0; padding-left: 1.2rem; }
+    ul.tight li + li,
+    ol.tight li + li { margin-top: 0.45rem; }
+    .flow-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 0.8rem;
+    }
+    .flow-list li {
+      padding: 1rem 1.05rem;
+      border: 0.0625rem solid var(--cp-border);
+      border-radius: 1rem;
+      background: var(--cp-surface-soft);
+    }
+    .callout {
+      padding: 1rem 1.1rem;
+      border: 0.0625rem solid var(--cp-accent);
+      border-inline-start-width: 0.3rem;
+      border-radius: 1rem;
+      background: var(--cp-surface-soft);
+    }
+    .callout p:last-child,
+    .card p:last-child,
+    .story-card p:last-child { margin-bottom: 0; }
+    .resource-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .resource-card .resource-link { margin-top: auto; }
+    .resource-kicker {
+      margin: 0;
+      color: var(--cp-text-soft);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .resource-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 2.9rem;
+      width: fit-content;
+      padding: 0.7rem 0.9rem;
+      border: 0.0625rem solid var(--cp-accent);
+      border-radius: 0.75rem;
+      background: var(--cp-surface-soft);
+      color: var(--cp-accent-hover);
+      font-weight: 800;
+      text-decoration: none;
+    }
+    .resource-link:hover,
+    .resource-link:focus-visible {
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+    }
+    .outcome-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 0.8rem;
+    }
+    .outcome-list li {
+      padding: 0.95rem 1rem;
+      border: 0.0625rem solid var(--cp-border);
+      border-radius: 1rem;
+      background: var(--cp-surface);
+    }
+    footer.site-footer {
+      padding: 1.5rem 0 2rem;
+      background: var(--cp-bg-elevated);
+      color: var(--cp-text-soft);
+      font-size: 0.92rem;
+    }
+    @media (max-width: 56rem) {
+      .site-header { position: static; }
+      .meta-row,
+      .card-grid,
+      .checklist-grid,
+      .story-grid,
+      .section-head { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 32rem) {
+      .wrap { width: calc(100% - 1.2rem); }
+      .brand-cluster { gap: 0.35rem 0.45rem; }
+      .brand-node { min-height: 1.8rem; padding: 0.2rem 0.5rem; font-size: 0.82rem; }
+      .brand-separator { display: none; }
+      .house-node { gap: 0.3rem; }
+      .house-mark { width: 1.7rem; height: 1.7rem; }
+      .hero-inner { padding: 1.4rem 0 1.2rem; }
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.55rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+    @media print {
+      .site-header,
+      .skip-link { display: none; }
+      .wrap { width: 100%; }
+      body { font-size: 11pt; }
+      .content-section { padding: 1rem 0; }
+      .card,
+      .story-card,
+      .meta-box { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <noscript>
+    <main class="share-gate">
+      <section class="share-gate__panel">
+        <p class="share-gate__eyebrow">ABC Supply + Microsoft</p>
+        <h1>JavaScript is required</h1>
+        <p>This review site remains locked until JavaScript is enabled.</p>
+      </section>
+    </main>
+  </noscript>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <div class="brand-cluster" aria-label="ABC Supply Company, Microsoft, and MCAPS OS | SE OS identities">
+        <span class="brand-node brand-customer">ABC Supply Company</span>
+        <span class="brand-separator" aria-hidden="true">|</span>
+        <span class="brand-node brand-microsoft">Microsoft</span>
+        <span class="brand-separator" aria-hidden="true">|</span>
+        <span class="brand-node house-node" aria-label="MCAPS OS | SE OS Atom/Orbit house mark">
+          <svg class="house-mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+            <circle cx="32" cy="32" r="10" fill="#0057B8"></circle>
+            <circle cx="32" cy="32" r="22" fill="none" stroke="#003B7A" stroke-width="2"></circle>
+            <circle cx="32" cy="32" r="30" fill="none" stroke="#0057B8" stroke-width="2" stroke-dasharray="6 5"></circle>
+            <circle cx="54" cy="24" r="4" fill="#003B7A"></circle>
+          </svg>
+          <span class="house-wordmark">MCAPS OS | SE OS</span>
+        </span>
+      </div>
+      <nav class="section-nav" aria-label="Page sections">
+        <a href="#learning">Public learning</a>
+        <a href="#overview">Overview</a>
+        <a href="#demonstration">Demonstration</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#prerequisites">Prerequisites</a>
+        <a href="#checklist">Checklist</a>
+        <a href="#story">Five-minute story</a>
+        <a href="#pilot">Next step</a>
+      </nav>
+    </div>
+  </header>
+  <section class="hero" aria-labelledby="page-title">
+    <div class="wrap hero-inner">
+      <p class="eyebrow">PUBLIC LEARNING • BOUNDED PILOT REVIEW</p>
+      <h1 id="page-title">Learn what Cowork can do, then choose one bounded, no-write pilot scenario.</h1>
+      <p class="hero-summary">Start with three verified public learning destinations, then review a read-only demonstration that preserves recorded quantities and units, surfaces uncertainty, and ends with an unsubmitted human review.</p>
+      <a class="cta-link" href="#learning">Start with verified public Cowork learning</a>
+      <div class="meta-row">
+        <dl class="meta-box"><dt>Learning links</dt><dd>Three public destinations verified September 24, 2026</dd></dl>
+        <dl class="meta-box"><dt>Pilot data shape</dt><dd>Approved bounded sample of simulated order history</dd></dl>
+        <dl class="meta-box"><dt>Human boundary</dt><dd>No write or submission without separate approval and human action</dd></dl>
+      </div>
+    </div>
+  </section>
+  <main id="main-content">
+    <section class="content-section" id="learning">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>Choose your public Cowork learning next step</h2>
+          </div>
+          <p>Watch the introduction, review the next manufacturing use-case event, or explore the full series. Each destination is public and was verified in a rendered browser on September 24, 2026.</p>
+        </div>
+        <div class="checklist-grid">
+          <article class="card resource-card">
+            <p class="resource-kicker">Start here • on demand</p>
+            <h3>Cowork 101 for Manufacturing</h3>
+            <p>Get the introductory view of Cowork before evaluating a pilot scenario.</p>
+            <a class="resource-link" href="https://www.youtube.com/watch?v=mIoqX8c0CqU" target="_blank" rel="noopener noreferrer">Watch Cowork 101 for Manufacturing on YouTube</a>
+          </article>
+          <article class="card resource-card">
+            <p class="resource-kicker">Next live session</p>
+            <h3>High-Impact Cowork Use Cases for Manufacturing</h3>
+            <p>Tuesday, September 29, 2–3 PM. Anyone can view and join; opening the page does not register you.</p>
+            <a class="resource-link" href="https://aka.ms/MasterSeries/CoworkUseCases-MFM" target="_blank" rel="noopener noreferrer">Review the public Sept. 29 manufacturing event</a>
+          </article>
+          <article class="card resource-card">
+            <p class="resource-kicker">Series overview • Sept. 22–Oct. 13</p>
+            <h3>The Cowork Sessions — The Master Series</h3>
+            <p>See the public sequence from first login through enterprise scale and choose the session that fits your next question.</p>
+            <a class="resource-link" href="https://masterseries.powerappsportals.com/cowork-sessions" target="_blank" rel="noopener noreferrer">Explore all public Cowork Sessions</a>
+          </article>
+          <article class="card resource-card">
+            <p class="resource-kicker">Public/private boundary</p>
+            <h3>Only verified public resources are linked</h3>
+            <p>No private recordings, meeting links, transcripts, attendee information, registration action, or private source material are included.</p>
+            <a class="resource-link" href="#pilot">Continue to the bounded pilot next step</a>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section class="content-section" id="overview">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>Business outcome</h2>
+          </div>
+          <p>Use the experience to review prior-order history, preserve recorded quantities and units, highlight uncertainty, and help a person prepare the next human review step.</p>
+        </div>
+        <ul class="outcome-list">
+          <li>Help an inside-sales or operations user find the right prior-order history without broadening the approved sample.</li>
+          <li>Keep recorded quantities and units visible exactly as captured in the demonstration history.</li>
+          <li>Show uncertainty clearly when history does not answer a question or when a person must confirm commercial truth.</li>
+          <li>End with an unsubmitted handoff so a person decides what, if anything, should happen next.</li>
+        </ul>
+      </div>
+    </section>
+    <section class="content-section" id="demonstration">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>What the demonstration does</h2>
+          </div>
+          <p>The current proof uses simulated order history in a Microsoft demonstration environment and retrieves only an approved bounded sample.</p>
+        </div>
+        <div class="card-grid">
+          <article class="card">
+            <h3>What it does</h3>
+            <ul class="tight">
+              <li>Distinguishes history from current commercial truth.</li>
+              <li>Keeps a no-write, human-control boundary visible.</li>
+              <li>Supports review of prior-order details before a person decides on next steps.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>What it does not do</h3>
+            <ul class="tight">
+              <li>No live customer order-system connection.</li>
+              <li>No current availability check.</li>
+              <li>No authoritative commercial terms or quote output.</li>
+              <li>No physical color equivalence decision.</li>
+              <li>No order, quote, invoice, or email submission.</li>
+              <li>No customer commitment, activation, or entitlement claim.</li>
+            </ul>
+          </article>
+        </div>
+        <div class="callout">
+          <p><strong>Human-control boundary:</strong> The demonstration prepares a review. It does not complete a transaction or make a customer promise.</p>
+        </div>
+      </div>
+    </section>
+    <section class="content-section" id="architecture">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>Provider-neutral architecture</h2>
+          </div>
+          <p>The experience stays stable while the approved order-history provider can change after review of source, identity, field, and security requirements.</p>
+        </div>
+        <ol class="flow-list">
+          <li><strong>Cowork experience:</strong> guides a person through a bounded review flow.</li>
+          <li><strong>Constrained read-only connector:</strong> keeps the experience within an approved sample and no-write boundary.</li>
+          <li><strong>Approved order-history provider:</strong> supplies the prior-order history used for review.</li>
+        </ol>
+        <div class="card-grid">
+          <article class="card">
+            <h3>Current proof path</h3>
+            <p>The current proof uses Dataverse in a demonstration environment to show the bounded read-only pattern.</p>
+          </article>
+          <article class="card">
+            <h3>Future customer adapter</h3>
+            <p>A later customer adapter would replace only the provider after source, identity, field, and security review. Any real data, access, installation, write phase, destination, or publication needs separate approval.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section class="content-section" id="prerequisites">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>Customer prerequisites</h2>
+          </div>
+          <p>A bounded pilot needs named owners, approved read scope, and clear data and support rules before any real-data or installation discussion.</p>
+        </div>
+        <div class="checklist-grid">
+          <article class="card">
+            <h3>Ownership and scope</h3>
+            <ul class="tight">
+              <li>Named business or process owner.</li>
+              <li>Authoritative order-source owner and approved read API.</li>
+              <li>Approved read scope for order, line, customer, job, and branch keys.</li>
+              <li>Customer-approved or synthetic fixtures for pilot validation.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Data and identity</h3>
+            <ul class="tight">
+              <li>Quantity and unit semantics.</li>
+              <li>Pagination and freshness expectations.</li>
+              <li>Delegated identity and security review.</li>
+              <li>Audit and retention requirements.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Operational readiness</h3>
+            <ul class="tight">
+              <li>Cowork and admin eligibility.</li>
+              <li>Policy review for the intended pilot audience.</li>
+              <li>Pilot success measure.</li>
+              <li>Support owner and escalation path.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Approval boundary</h3>
+            <ul class="tight">
+              <li>Separate approval for any real data access.</li>
+              <li>Separate approval for any installation or destination.</li>
+              <li>Separate approval for any write phase.</li>
+              <li>Separate approval for any publication or sharing step.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section class="content-section" id="checklist">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>Acceptance checklist and questions</h2>
+          </div>
+          <p>Use these questions to confirm that one bounded pilot scenario is real, supportable, and safe to review further.</p>
+        </div>
+        <div class="card-grid">
+          <article class="card">
+            <h3>Checklist</h3>
+            <ul class="tight">
+              <li>Is there one named pilot scenario with a clear review outcome?</li>
+              <li>Is the approved read scope narrow enough to review safely?</li>
+              <li>Can the source owner explain how quantities and units should be read?</li>
+              <li>Are support ownership and success measures clear?</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Questions to answer next</h3>
+            <ul class="tight">
+              <li>Which single scenario should prove value first?</li>
+              <li>What uncertainty must stay visible to the end user?</li>
+              <li>Which approvals are required before any real data or access path is discussed?</li>
+              <li>Who decides whether the no-write review experience is sufficient for the first pilot?</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section class="content-section" id="story">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>Simple five-minute demo story</h2>
+          </div>
+          <p>This story uses fictional examples only and ends with an explicit human handoff.</p>
+        </div>
+        <div class="story-grid">
+          <article class="story-card">
+            <h3>Scene 1</h3>
+            <p>A user opens the experience and asks to review prior-order history for the fictional account Harbor Ridge Builders.</p>
+          </article>
+          <article class="story-card">
+            <h3>Scene 2</h3>
+            <p>The demonstration returns only the approved bounded history sample, preserves recorded quantities and units, and highlights that the history is simulated.</p>
+          </article>
+          <article class="story-card">
+            <h3>Scene 3</h3>
+            <p>The user asks whether a historical material color can be treated as current truth. The experience surfaces uncertainty and keeps the answer bounded to recorded history.</p>
+          </article>
+          <article class="story-card">
+            <h3>Scene 4</h3>
+            <p>The user prepares an unsubmitted review summary for human follow-up instead of a transaction.</p>
+          </article>
+        </div>
+        <div class="callout">
+          <p><strong>Conclusion:</strong> Not submitted - human action required.</p>
+        </div>
+      </div>
+    </section>
+    <section class="content-section" id="pilot">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>Next step</h2>
+          </div>
+          <p>Review prerequisites and select one bounded pilot scenario. Any real data, access, installation, write phase, destination, or publication needs separate approval.</p>
+        </div>
+        <div class="card-grid">
+          <article class="card">
+            <h3>Recommended next step</h3>
+            <p>Review prerequisites and select one bounded pilot scenario.</p>
+          </article>
+          <article class="card">
+            <h3>Still blocked</h3>
+            <p>Real data use, access, installation, write activity, destination selection, and publication remain blocked until separate approval is granted.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Verified public learning links plus a local review candidate. Simulated history only. No live customer order-system connection, registration, write, submission, installation, sharing, or publication was performed.</p>
+    </div>
+  </footer>
+</body>
+</html>
