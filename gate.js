@@ -2,7 +2,7 @@
   "use strict";
 
   const CFG = {
-    passHash: "PUBLICATION_CONFIGURATION_PENDING",
+    passHash: "59b925a8ec28afa47191d0e58f0e62da06c122fbf89bb78570e3645009018ea9",
     storageKey: "abc-order-review-hub-access",
   };
 
