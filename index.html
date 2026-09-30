@@ -44,6 +44,8 @@
   --cp-panel-strong: #FFFFFF;
   --cp-sheen: rgba(234, 243, 255, 0.80);
   --cp-highlight: rgba(0, 87, 184, 0.10);
+  --cp-swatch-drift: #71777B;
+  --cp-swatch-pebble: #9C9689;
 }
 html[data-theme="dark"] {
   color-scheme: dark;
@@ -70,9 +72,22 @@ html[data-theme="dark"] {
   --cp-panel-strong: #173655;
   --cp-sheen: rgba(255, 255, 255, 0.04);
   --cp-highlight: rgba(120, 183, 255, 0.16);
+  --cp-swatch-drift: #8A9196;
+  --cp-swatch-pebble: #B5AFA3;
 }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
+    .sr-only {
+      position: absolute;
+      width: 0.0625rem;
+      height: 0.0625rem;
+      padding: 0;
+      margin: -0.0625rem;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
     body {
       margin: 0;
       background: var(--cp-bg);
@@ -237,6 +252,7 @@ html[data-theme="dark"] {
     .content-section {
       padding: 2rem 0;
       border-bottom: 0.0625rem solid var(--cp-border);
+      scroll-margin-top: 6.5rem;
     }
     .content-section:nth-of-type(odd) { background: var(--cp-bg-elevated); }
     .section-head {
@@ -262,6 +278,466 @@ html[data-theme="dark"] {
       border: 0.0625rem solid var(--cp-border);
       border-radius: 1rem;
       background: var(--cp-surface-soft);
+    }
+    .demo-intro {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      padding: 0.85rem 1rem;
+      border: 0.0625rem solid var(--cp-border);
+      border-radius: 0.75rem;
+      background: var(--cp-surface);
+    }
+    .demo-intro p { margin: 0; color: var(--cp-text-soft); }
+    .demo-proof-badge,
+    .demo-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      width: fit-content;
+      padding: 0.3rem 0.6rem;
+      border: 0.0625rem solid var(--cp-border);
+      border-radius: 999px;
+      background: var(--cp-surface-soft);
+      color: var(--cp-text);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+    .demo-proof-badge::before {
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      background: var(--cp-success);
+      content: "";
+    }
+    .demo-shell {
+      overflow: hidden;
+      border: 0.0625rem solid var(--cp-border-strong);
+      border-radius: 1rem;
+      background: var(--cp-surface);
+      box-shadow: var(--cp-shadow);
+    }
+    .demo-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      min-height: 3.2rem;
+      padding: 0.7rem 1rem;
+      border-bottom: 0.0625rem solid var(--cp-border);
+      background: var(--cp-bg-elevated);
+    }
+    .window-dots { display: flex; gap: 0.35rem; }
+    .window-dot {
+      width: 0.65rem;
+      height: 0.65rem;
+      border-radius: 50%;
+      background: var(--cp-border-strong);
+    }
+    .window-dot:first-child { background: var(--cp-danger); }
+    .window-dot:nth-child(2) { background: var(--cp-warning); }
+    .window-dot:last-child { background: var(--cp-success); }
+    .demo-toolbar-title {
+      flex: 1;
+      color: var(--cp-text);
+      font-size: 0.88rem;
+      font-weight: 800;
+      text-align: center;
+    }
+    .demo-stage {
+      display: grid;
+      grid-template-columns: minmax(12.5rem, 0.3fr) minmax(0, 1fr);
+      min-height: 35rem;
+    }
+    .demo-rail {
+      min-width: 0;
+      padding: 1rem;
+      border-right: 0.0625rem solid var(--cp-border);
+      background: var(--cp-surface-soft);
+    }
+    .demo-rail-label {
+      margin: 0 0 0.75rem;
+      color: var(--cp-text-soft);
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .demo-scene-list {
+      display: grid;
+      gap: 0.55rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .demo-step {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.7rem;
+      align-items: center;
+      width: 100%;
+      min-height: 3.4rem;
+      padding: 0.65rem;
+      border: 0.0625rem solid transparent;
+      border-radius: 0.75rem;
+      background: transparent;
+      color: var(--cp-text);
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+    }
+    .demo-step:hover,
+    .demo-step.is-active {
+      border-color: var(--cp-accent);
+      background: var(--cp-surface);
+    }
+    .demo-step-number {
+      display: grid;
+      place-items: center;
+      width: 1.8rem;
+      height: 1.8rem;
+      border: 0.0625rem solid var(--cp-border-strong);
+      border-radius: 50%;
+      color: var(--cp-text-soft);
+      font-size: 0.8rem;
+      font-weight: 900;
+    }
+    .demo-step.is-active .demo-step-number {
+      border-color: var(--cp-accent);
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+    }
+    .demo-step-copy strong,
+    .demo-step-copy span { display: block; }
+    .demo-step-copy strong { font-size: 0.9rem; }
+    .demo-step-copy span { color: var(--cp-text-soft); font-size: 0.75rem; }
+    .demo-view {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      min-width: 0;
+      padding: 1.2rem;
+      background: var(--cp-bg-elevated);
+    }
+    .demo-scene-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .demo-scene-heading p { margin: 0; color: var(--cp-text-soft); }
+    .demo-scene {
+      display: none;
+      gap: 1rem;
+      flex: 1;
+    }
+    .demo-scene.is-active {
+      display: grid;
+      animation: demo-reveal 0.28s ease-out;
+    }
+    @keyframes demo-reveal {
+      from { opacity: 0; transform: translateY(0.35rem); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .conversation,
+    .order-panel,
+    .review-panel {
+      overflow: hidden;
+      border: 0.0625rem solid var(--cp-border);
+      border-radius: 0.85rem;
+      background: var(--cp-surface);
+    }
+    .conversation-header,
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.75rem 0.9rem;
+      border-bottom: 0.0625rem solid var(--cp-border);
+      background: var(--cp-surface-soft);
+    }
+    .agent-title {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 800;
+    }
+    .agent-mark {
+      display: grid;
+      place-items: center;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 0.55rem;
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+    .conversation-body {
+      display: grid;
+      gap: 0.8rem;
+      min-height: 20rem;
+      padding: 1rem;
+    }
+    .chat-row { display: flex; }
+    .chat-row.user { justify-content: flex-end; }
+    .chat-bubble {
+      max-width: min(88%, 42rem);
+      padding: 0.8rem 0.9rem;
+      border: 0.0625rem solid var(--cp-border);
+      border-radius: 0.85rem;
+      background: var(--cp-surface-soft);
+    }
+    .chat-row.user .chat-bubble {
+      border-color: var(--cp-accent);
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+    }
+    .chat-bubble p:last-child { margin: 0; }
+    .thinking-line {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      color: var(--cp-text-soft);
+      font-size: 0.88rem;
+    }
+    .thinking-dots { display: inline-flex; gap: 0.2rem; }
+    .thinking-dots span {
+      width: 0.35rem;
+      height: 0.35rem;
+      border-radius: 50%;
+      background: var(--cp-accent);
+      animation: demo-pulse 1.1s ease-in-out infinite;
+    }
+    .thinking-dots span:nth-child(2) { animation-delay: 0.15s; }
+    .thinking-dots span:nth-child(3) { animation-delay: 0.3s; }
+    @keyframes demo-pulse {
+      0%, 100% { opacity: 0.35; transform: translateY(0); }
+      50% { opacity: 1; transform: translateY(-0.2rem); }
+    }
+    .table-scroll { overflow-x: auto; }
+    .demo-table {
+      width: 100%;
+      min-width: 42rem;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+    }
+    .demo-table th,
+    .demo-table td {
+      padding: 0.7rem;
+      border-bottom: 0.0625rem solid var(--cp-border);
+      text-align: left;
+      vertical-align: top;
+    }
+    .demo-table th {
+      background: var(--cp-surface-soft);
+      color: var(--cp-text-soft);
+      font-size: 0.74rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .demo-table tr:last-child td { border-bottom: 0; }
+    .result-pill {
+      display: inline-flex;
+      padding: 0.2rem 0.45rem;
+      border: 0.0625rem solid var(--cp-success);
+      border-radius: 999px;
+      color: var(--cp-success);
+      font-size: 0.72rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .compare-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    .product-card {
+      padding: 1rem;
+      border: 0.0625rem solid var(--cp-border);
+      border-radius: 0.85rem;
+      background: var(--cp-surface);
+    }
+    .product-card h4 { margin: 0 0 0.35rem; font-size: 1rem; }
+    .product-card p { color: var(--cp-text-soft); }
+    .swatch-row {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin-top: 0.8rem;
+      padding-top: 0.8rem;
+      border-top: 0.0625rem solid var(--cp-border);
+    }
+    .color-swatch {
+      width: 3rem;
+      height: 3rem;
+      border: 0.16rem solid var(--cp-surface);
+      border-radius: 0.65rem;
+      box-shadow: 0 0 0 0.0625rem var(--cp-border-strong);
+    }
+    .color-swatch.drift { background: var(--cp-swatch-drift); }
+    .color-swatch.pebble { background: var(--cp-swatch-pebble); }
+    .candidate-banner,
+    .no-write-banner {
+      padding: 0.85rem 1rem;
+      border: 0.0625rem solid var(--cp-warning);
+      border-left-width: 0.3rem;
+      border-radius: 0.75rem;
+      background: var(--cp-surface);
+    }
+    .no-write-banner {
+      border-color: var(--cp-success);
+      color: var(--cp-text);
+    }
+    .review-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(14rem, 0.42fr);
+      gap: 1rem;
+      padding: 1rem;
+    }
+    .review-summary {
+      display: grid;
+      gap: 0.55rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .review-summary li {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.6rem;
+      align-items: start;
+      padding: 0.7rem;
+      border: 0.0625rem solid var(--cp-border);
+      border-radius: 0.65rem;
+      background: var(--cp-surface-soft);
+    }
+    .review-summary li::before {
+      color: var(--cp-success);
+      font-weight: 900;
+      content: "✓";
+    }
+    .human-actions {
+      padding: 0.9rem;
+      border: 0.0625rem solid var(--cp-warning);
+      border-radius: 0.75rem;
+      background: var(--cp-surface-soft);
+    }
+    .human-actions h4 { margin: 0 0 0.55rem; }
+    .human-actions ul { margin: 0; padding-left: 1.1rem; }
+    .demo-controls {
+      display: grid;
+      grid-template-columns: auto minmax(8rem, 1fr) auto;
+      align-items: center;
+      gap: 0.8rem;
+      padding-top: 0.2rem;
+    }
+    .demo-play {
+      min-height: 2.75rem;
+      padding: 0.6rem 0.9rem;
+      border: 0.0625rem solid var(--cp-accent);
+      border-radius: 0.7rem;
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+      font: inherit;
+      font-weight: 900;
+      cursor: pointer;
+    }
+    .demo-progress-track {
+      overflow: hidden;
+      height: 0.5rem;
+      border-radius: 999px;
+      background: var(--cp-border);
+    }
+    .demo-progress-bar {
+      display: block;
+      width: 25%;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--cp-accent);
+      transition: width 0.28s ease;
+    }
+    .demo-progress-label {
+      color: var(--cp-text-soft);
+      font-size: 0.8rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .setup-figure {
+      margin: 1.3rem 0 0;
+      padding: 1rem;
+      border: 0.0625rem solid var(--cp-border);
+      border-radius: 1rem;
+      background: var(--cp-surface);
+      box-shadow: var(--cp-shadow);
+    }
+    .setup-figure h3 { margin-bottom: 0.25rem; }
+    .setup-figure > p { color: var(--cp-text-soft); }
+    .setup-scroll {
+      overflow-x: auto;
+      padding: 0.5rem 0;
+    }
+    .setup-diagram {
+      display: block;
+      min-width: 58rem;
+      width: 100%;
+      height: auto;
+    }
+    .setup-mobile-flow {
+      display: none;
+      gap: 0.45rem;
+      margin: 0.75rem 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .setup-mobile-flow li {
+      position: relative;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.7rem;
+      align-items: center;
+      padding: 0.75rem;
+      border: 0.0625rem solid var(--cp-border-strong);
+      border-radius: 0.7rem;
+      background: var(--cp-surface-soft);
+    }
+    .setup-mobile-flow li:not(:last-child)::after {
+      position: absolute;
+      bottom: -0.7rem;
+      left: 1.25rem;
+      z-index: 1;
+      color: var(--cp-accent);
+      font-size: 1rem;
+      font-weight: 900;
+      content: "↓";
+    }
+    .setup-mobile-number {
+      display: grid;
+      place-items: center;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+      font-weight: 900;
+    }
+    .setup-mobile-flow li:last-child {
+      border-color: var(--cp-success);
+    }
+    .setup-mobile-flow li:last-child .setup-mobile-number {
+      background: var(--cp-success);
+    }
+    .setup-mobile-flow strong,
+    .setup-mobile-flow span { display: block; }
+    .setup-mobile-flow span { color: var(--cp-text-soft); font-size: 0.78rem; }
+    .setup-figure figcaption {
+      margin-top: 0.6rem;
+      color: var(--cp-text-soft);
+      font-size: 0.85rem;
     }
     .callout {
       padding: 1rem 1.1rem;
@@ -331,6 +807,16 @@ html[data-theme="dark"] {
       .checklist-grid,
       .story-grid,
       .section-head { grid-template-columns: 1fr; }
+      .demo-stage { grid-template-columns: 1fr; }
+      .demo-rail {
+        border-right: 0;
+        border-bottom: 0.0625rem solid var(--cp-border);
+      }
+      .demo-scene-list {
+        grid-template-columns: repeat(4, minmax(11rem, 1fr));
+        overflow-x: auto;
+        padding-bottom: 0.35rem;
+      }
     }
     @media (max-width: 32rem) {
       .wrap { width: calc(100% - 1.2rem); }
@@ -342,6 +828,66 @@ html[data-theme="dark"] {
       .hero-inner { padding: 1.4rem 0 1.2rem; }
       h1 { font-size: 2rem; }
       h2 { font-size: 1.55rem; }
+      .demo-intro,
+      .demo-scene-heading { align-items: flex-start; flex-direction: column; }
+      .demo-toolbar {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+      }
+      .demo-toolbar-title { text-align: left; }
+      .demo-toolbar > .demo-status {
+        grid-column: 1 / -1;
+        justify-self: center;
+        white-space: normal;
+        text-align: center;
+      }
+      .demo-view { padding: 0.75rem; }
+      .conversation-body { min-height: 17rem; }
+      .compare-grid,
+      .review-grid { grid-template-columns: 1fr; }
+      .demo-scene-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        overflow: visible;
+      }
+      .demo-step { min-width: 0; }
+      .demo-table { min-width: 0; }
+      .demo-table thead { display: none; }
+      .demo-table,
+      .demo-table tbody,
+      .demo-table tr,
+      .demo-table td { display: block; width: 100%; }
+      .demo-table tbody {
+        display: grid;
+        gap: 0.75rem;
+        padding: 0.75rem;
+      }
+      .demo-table tr {
+        overflow: hidden;
+        border: 0.0625rem solid var(--cp-border);
+        border-radius: 0.7rem;
+        background: var(--cp-surface);
+      }
+      .demo-table td {
+        display: grid;
+        grid-template-columns: minmax(6.5rem, 0.42fr) minmax(0, 1fr);
+        gap: 0.6rem;
+        padding: 0.6rem 0.7rem;
+      }
+      .demo-table td::before {
+        color: var(--cp-text-soft);
+        font-size: 0.68rem;
+        font-weight: 900;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        content: attr(data-label);
+      }
+      .setup-scroll { display: none; }
+      .setup-mobile-flow { display: grid; }
+      .demo-controls { grid-template-columns: 1fr; }
+      .demo-progress-track,
+      .demo-play,
+      .demo-progress-label { grid-column: 1; }
+      .demo-progress-label { text-align: center; }
     }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
@@ -390,6 +936,7 @@ html[data-theme="dark"] {
       <nav class="section-nav" aria-label="Page sections">
         <a href="#value">Value</a>
         <a href="#workflow">Workflow</a>
+        <a href="#demo">Visual demo</a>
         <a href="#matching">Color matching</a>
         <a href="#output">Review packet</a>
         <a href="#measures">Pilot measures</a>
@@ -405,7 +952,7 @@ html[data-theme="dark"] {
       <h1 id="page-title">Turn prior-order history into a review-ready reorder without losing the details that matter.</h1>
       <p class="hero-summary">The proposed experience helps a seller find one exact prior order, reconstruct its product, material, color, quantity, and unit details, compare those details with a curated current reference, and prepare the next human review—without silently substituting a product or placing an order.</p>
       <p class="hero-summary"><strong>Decision now:</strong> validate a bounded, read-only repeat-order and product/color-review pilot with named owners and an agreed scorecard.</p>
-      <a class="cta-link" href="#workflow">See the order-review workflow</a>
+      <a class="cta-link" href="#demo">Watch the visual demo</a>
       <div class="meta-row">
         <dl class="meta-box"><dt>Seller outcome</dt><dd>Faster, more confident answers to repeat-order and repair questions</dd></dl>
         <dl class="meta-box"><dt>First module</dt><dd>Product, material, and recorded-color matching for prior orders</dd></dl>
@@ -462,6 +1009,263 @@ html[data-theme="dark"] {
           <li><strong>4. Run product and color review.</strong> Compare the recorded description with a curated product-family and palette reference; show evidence and uncertainty.</li>
           <li><strong>5. Produce an unsubmitted review packet.</strong> Summarize what is known, what may match, and what a person must confirm before the next action.</li>
         </ol>
+      </div>
+    </section>
+    <section class="content-section" id="demo">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">SEE THE PREPARED EXPERIENCE</p>
+            <h2>Watch the seller move from a question to a human review packet</h2>
+          </div>
+          <p>This guided composite recreates states from two validated synthetic demo runs: exact line retrieval followed by a separately tested candidate comparison. It does not imply that one recording contained every scene or expose a private tenant.</p>
+        </div>
+        <div class="demo-intro">
+          <p><strong>What Dana and David should look for:</strong> Is this the right seller experience, and are these the right points for human validation?</p>
+          <span class="demo-proof-badge">Grounded in validated demo runs</span>
+        </div>
+        <div class="demo-shell" data-demo-player>
+          <div class="demo-toolbar" aria-hidden="true">
+            <div class="window-dots">
+              <span class="window-dot"></span>
+              <span class="window-dot"></span>
+              <span class="window-dot"></span>
+            </div>
+            <div class="demo-toolbar-title">ABC Order Review | Prepared demonstration</div>
+            <span class="demo-status">Composite of validated runs</span>
+          </div>
+          <div class="demo-stage">
+            <aside class="demo-rail" aria-label="Walkthrough scenes">
+              <p class="demo-rail-label">30-second walkthrough</p>
+              <div class="demo-scene-list" role="tablist" aria-label="Demo scenes">
+                <button class="demo-step is-active" type="button" role="tab" id="demo-tab-1" aria-selected="true" aria-controls="demo-scene-1" data-demo-step="0">
+                  <span class="demo-step-number">1</span>
+                  <span class="demo-step-copy"><strong>Ask</strong><span>Plain-language order request</span></span>
+                </button>
+                <button class="demo-step" type="button" role="tab" id="demo-tab-2" aria-selected="false" aria-controls="demo-scene-2" data-demo-step="1" tabindex="-1">
+                  <span class="demo-step-number">2</span>
+                  <span class="demo-step-copy"><strong>Retrieve</strong><span>Exact products and quantities</span></span>
+                </button>
+                <button class="demo-step" type="button" role="tab" id="demo-tab-3" aria-selected="false" aria-controls="demo-scene-3" data-demo-step="2" tabindex="-1">
+                  <span class="demo-step-number">3</span>
+                  <span class="demo-step-copy"><strong>Compare</strong><span>Candidate, not substitution</span></span>
+                </button>
+                <button class="demo-step" type="button" role="tab" id="demo-tab-4" aria-selected="false" aria-controls="demo-scene-4" data-demo-step="3" tabindex="-1">
+                  <span class="demo-step-number">4</span>
+                  <span class="demo-step-copy"><strong>Review</strong><span>Human decision packet</span></span>
+                </button>
+              </div>
+            </aside>
+            <div class="demo-view">
+              <section class="demo-scene is-active" id="demo-scene-1" role="tabpanel" aria-labelledby="demo-tab-1" data-demo-scene="0">
+                <div class="demo-scene-heading">
+                  <div>
+                    <p class="eyebrow">SCENE 1 | SELLER REQUEST</p>
+                    <h3>Ask for the order in normal business language</h3>
+                    <p>The experience starts with the task—not a search form or technical query.</p>
+                  </div>
+                  <span class="demo-status">Input captured</span>
+                </div>
+                <div class="conversation">
+                  <div class="conversation-header">
+                    <div class="agent-title"><span class="agent-mark">OR</span>ABC Order Review</div>
+                    <span class="demo-status">Read-only</span>
+                  </div>
+                  <div class="conversation-body">
+                    <div class="chat-row user">
+                      <div class="chat-bubble">
+                        <p>Review this synthetic order: line 1, 24 pieces SYN-SID-101; line 2, 6 pieces SYN-TRM-101.</p>
+                      </div>
+                    </div>
+                    <div class="chat-row">
+                      <div class="chat-bubble">
+                        <p><strong>I’ll retrieve the exact lines, preserve the recorded quantities and units, and prepare an unsubmitted review.</strong></p>
+                        <div class="thinking-line">
+                          <span>Reading the bounded order sample</span>
+                          <span class="thinking-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <section class="demo-scene" id="demo-scene-2" role="tabpanel" aria-labelledby="demo-tab-2" data-demo-scene="1" hidden>
+                <div class="demo-scene-heading">
+                  <div>
+                    <p class="eyebrow">SCENE 2 | EXACT RETRIEVAL</p>
+                    <h3>Recover the products, material, color, quantity, and unit together</h3>
+                    <p>The answer preserves the original line facts instead of summarizing away the details.</p>
+                  </div>
+                  <span class="demo-status">Ready for review</span>
+                </div>
+                <div class="order-panel">
+                  <div class="panel-header">
+                    <strong>Order review draft</strong>
+                    <span class="result-pill">2 lines resolved</span>
+                  </div>
+                  <div class="table-scroll">
+                    <table class="demo-table">
+                      <thead>
+                        <tr><th>Line</th><th>Resolved product</th><th>Material + recorded color</th><th>Quantity</th><th>Status</th></tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td data-label="Line">1</td>
+                          <td data-label="Resolved product"><strong>SYN-SID-101</strong><br>Demo Cedarline siding<br>Lap board 8.25 × 144 in.</td>
+                          <td data-label="Material + color">Fiber cement<br><strong>Drift Gray</strong></td>
+                          <td data-label="Quantity">24 pieces</td>
+                          <td data-label="Status"><span class="result-pill">Resolved</span></td>
+                        </tr>
+                        <tr>
+                          <td data-label="Line">2</td>
+                          <td data-label="Resolved product"><strong>SYN-TRM-101</strong><br>Demo Cedarline trim<br>Board 3.5 × 144 in.</td>
+                          <td data-label="Material + color">Fiber cement<br><strong>Drift Gray</strong></td>
+                          <td data-label="Quantity">6 pieces</td>
+                          <td data-label="Status"><span class="result-pill">Resolved</span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="no-write-banner"><strong>Preserved:</strong> no line dropped, quantity changed, unit converted, or product silently substituted.</div>
+              </section>
+              <section class="demo-scene" id="demo-scene-3" role="tabpanel" aria-labelledby="demo-tab-3" data-demo-scene="2" hidden>
+                <div class="demo-scene-heading">
+                  <div>
+                    <p class="eyebrow">SCENE 3 | SECOND VALIDATED PROMPT</p>
+                    <h3>Show a possible alternative without turning it into a substitution</h3>
+                    <p>A separately tested prompt asks for the declared candidate while keeping the requested line unchanged.</p>
+                  </div>
+                  <span class="demo-status">Needs clarification</span>
+                </div>
+                <div class="compare-grid">
+                  <article class="product-card">
+                    <p class="resource-kicker">Recorded request</p>
+                    <h4>SYN-SID-101 | Demo Cedarline</h4>
+                    <p>Fiber-cement lap siding, 8.25 × 144 inches, 24 pieces.</p>
+                    <div class="swatch-row">
+                      <span class="color-swatch drift" aria-label="Illustrative Drift Gray swatch"></span>
+                      <span><strong>Drift Gray</strong><br>Recorded color</span>
+                    </div>
+                  </article>
+                  <article class="product-card">
+                    <p class="resource-kicker">Proposed only</p>
+                    <h4>SYN-SID-201 | Demo Ridgeline</h4>
+                    <p>Same material, dimensions, and unit; not an approved replacement.</p>
+                    <div class="swatch-row">
+                      <span class="color-swatch pebble" aria-label="Illustrative Pebble Gray swatch"></span>
+                      <span><strong>Pebble Gray</strong><br>Candidate reference</span>
+                    </div>
+                  </article>
+                </div>
+                <div class="candidate-banner"><strong>Candidate—not an exact color match:</strong> a human must confirm by physical sample or manufacturer guidance before considering the alternative. The original 24-piece line remains unchanged.</div>
+              </section>
+              <section class="demo-scene" id="demo-scene-4" role="tabpanel" aria-labelledby="demo-tab-4" data-demo-scene="3" hidden>
+                <div class="demo-scene-heading">
+                  <div>
+                    <p class="eyebrow">SCENE 4 | HUMAN HANDOFF</p>
+                    <h3>End with a review packet—not a transaction</h3>
+                    <p>The experience states what is known, what is uncertain, and what a person must decide next.</p>
+                  </div>
+                  <span class="demo-status">Unsubmitted draft</span>
+                </div>
+                <div class="review-panel">
+                  <div class="panel-header">
+                    <strong>Order review packet</strong>
+                    <span class="result-pill">Human action required</span>
+                  </div>
+                  <div class="review-grid">
+                    <ul class="review-summary">
+                      <li><span><strong>Exact history retained:</strong> two requested lines with original quantities and units.</span></li>
+                      <li><span><strong>Product evidence attached:</strong> material, dimensions, and recorded color remain visible.</span></li>
+                      <li><span><strong>Uncertainty labeled:</strong> Pebble Gray is a candidate reference, not an approved equivalent.</span></li>
+                      <li><span><strong>Commercial truth separated:</strong> current price, availability, and delivery remain outside the proof.</span></li>
+                    </ul>
+                    <aside class="human-actions">
+                      <h4>Person confirms next</h4>
+                      <ul>
+                        <li>Keep the recorded line or validate the candidate.</li>
+                        <li>Confirm current availability and terms.</li>
+                        <li>Decide whether to begin quote or reorder work.</li>
+                      </ul>
+                    </aside>
+                  </div>
+                </div>
+                <div class="no-write-banner"><strong>No order submitted.</strong> No stock, price, delivery, email, quote, or ERP write occurred.</div>
+              </section>
+              <div class="demo-controls">
+                <button class="demo-play" type="button" data-demo-play>▶ Play walkthrough</button>
+                <div class="demo-progress-track" aria-hidden="true"><span class="demo-progress-bar" data-demo-progress></span></div>
+                <span class="demo-progress-label" data-demo-progress-label>Scene 1 of 4</span>
+              </div>
+              <p class="sr-only" aria-live="polite" data-demo-live>Scene 1 of 4: Ask</p>
+            </div>
+          </div>
+        </div>
+        <figure class="setup-figure">
+          <h3>What the prepared setup actually does</h3>
+          <p>One bounded path keeps the seller experience useful while preserving the human and data boundaries that a pilot must validate.</p>
+          <div class="setup-scroll">
+            <svg class="setup-diagram" viewBox="0 0 1100 290" role="img" aria-labelledby="setup-title setup-desc">
+              <title id="setup-title">Prepared ABC Order Review demonstration setup</title>
+              <desc id="setup-desc">A seller asks the order review experience, which reads a bounded synthetic history, compares it with a curated product and color reference, and produces an unsubmitted human review packet.</desc>
+              <defs>
+                <marker id="demo-arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                  <polygon points="0 0,10 3.5,0 7" fill="var(--cp-accent)"></polygon>
+                </marker>
+              </defs>
+              <rect x="10" y="20" width="1080" height="245" rx="16" fill="var(--cp-surface-soft)" stroke="var(--cp-border)"></rect>
+              <path d="M 200 142 H 250" fill="none" stroke="var(--cp-accent)" stroke-width="3" marker-end="url(#demo-arrow)"></path>
+              <path d="M 410 142 H 460" fill="none" stroke="var(--cp-accent)" stroke-width="3" marker-end="url(#demo-arrow)"></path>
+              <path d="M 620 142 H 670" fill="none" stroke="var(--cp-accent)" stroke-width="3" marker-end="url(#demo-arrow)"></path>
+              <path d="M 830 142 H 880" fill="none" stroke="var(--cp-accent)" stroke-width="3" marker-end="url(#demo-arrow)"></path>
+              <g>
+                <rect x="40" y="78" width="160" height="128" rx="12" fill="var(--cp-surface)" stroke="var(--cp-border-strong)" stroke-width="2"></rect>
+                <circle cx="120" cy="112" r="20" fill="var(--cp-accent)"></circle>
+                <text x="120" y="118" text-anchor="middle" fill="var(--cp-accent-fg)" font-size="14" font-weight="800">1</text>
+                <text x="120" y="153" text-anchor="middle" fill="var(--cp-text)" font-size="15" font-weight="800">Seller asks</text>
+                <text x="120" y="176" text-anchor="middle" fill="var(--cp-text-soft)" font-size="11">Plain-language request</text>
+              </g>
+              <g>
+                <rect x="250" y="78" width="160" height="128" rx="12" fill="var(--cp-surface)" stroke="var(--cp-border-strong)" stroke-width="2"></rect>
+                <circle cx="330" cy="112" r="20" fill="var(--cp-accent)"></circle>
+                <text x="330" y="118" text-anchor="middle" fill="var(--cp-accent-fg)" font-size="14" font-weight="800">2</text>
+                <text x="330" y="153" text-anchor="middle" fill="var(--cp-text)" font-size="15" font-weight="800">Review logic</text>
+                <text x="330" y="176" text-anchor="middle" fill="var(--cp-text-soft)" font-size="11">Preserve + check</text>
+              </g>
+              <g>
+                <rect x="460" y="78" width="160" height="128" rx="12" fill="var(--cp-surface)" stroke="var(--cp-border-strong)" stroke-width="2"></rect>
+                <circle cx="540" cy="112" r="20" fill="var(--cp-accent)"></circle>
+                <text x="540" y="118" text-anchor="middle" fill="var(--cp-accent-fg)" font-size="14" font-weight="800">3</text>
+                <text x="540" y="153" text-anchor="middle" fill="var(--cp-text)" font-size="15" font-weight="800">Bounded history</text>
+                <text x="540" y="176" text-anchor="middle" fill="var(--cp-text-soft)" font-size="11">Synthetic read-only sample</text>
+              </g>
+              <g>
+                <rect x="670" y="78" width="160" height="128" rx="12" fill="var(--cp-surface)" stroke="var(--cp-border-strong)" stroke-width="2"></rect>
+                <circle cx="750" cy="112" r="20" fill="var(--cp-accent)"></circle>
+                <text x="750" y="118" text-anchor="middle" fill="var(--cp-accent-fg)" font-size="14" font-weight="800">4</text>
+                <text x="750" y="153" text-anchor="middle" fill="var(--cp-text)" font-size="15" font-weight="800">Curated reference</text>
+                <text x="750" y="176" text-anchor="middle" fill="var(--cp-text-soft)" font-size="11">Product + palette evidence</text>
+              </g>
+              <g>
+                <rect x="880" y="78" width="180" height="128" rx="12" fill="var(--cp-surface)" stroke="var(--cp-success)" stroke-width="3"></rect>
+                <circle cx="970" cy="112" r="20" fill="var(--cp-success)"></circle>
+                <text x="970" y="118" text-anchor="middle" fill="var(--cp-accent-fg)" font-size="14" font-weight="800">5</text>
+                <text x="970" y="153" text-anchor="middle" fill="var(--cp-text)" font-size="15" font-weight="800">Human review packet</text>
+                <text x="970" y="176" text-anchor="middle" fill="var(--cp-text-soft)" font-size="11">Unsubmitted, no write</text>
+              </g>
+              <text x="550" y="242" text-anchor="middle" fill="var(--cp-text-soft)" font-size="12" font-weight="700">A real pilot replaces only the approved history source after identity, API, security, and support owners agree the boundary.</text>
+            </svg>
+          </div>
+          <ol class="setup-mobile-flow" aria-label="Prepared setup flow">
+            <li><span class="setup-mobile-number">1</span><div><strong>Seller asks</strong><span>Plain-language request</span></div></li>
+            <li><span class="setup-mobile-number">2</span><div><strong>Review logic</strong><span>Preserve the request and check every line</span></div></li>
+            <li><span class="setup-mobile-number">3</span><div><strong>Bounded history</strong><span>Synthetic read-only sample</span></div></li>
+            <li><span class="setup-mobile-number">4</span><div><strong>Curated reference</strong><span>Product and palette evidence</span></div></li>
+            <li><span class="setup-mobile-number">5</span><div><strong>Human review packet</strong><span>Unsubmitted, no write</span></div></li>
+          </ol>
+          <figcaption>Prepared proof today: synthetic history plus a curated, dated reference. Pilot decision: validate the experience and name the owners required for an approved read-only source.</figcaption>
+        </figure>
       </div>
     </section>
     <section class="content-section" id="matching">
@@ -688,5 +1492,95 @@ html[data-theme="dark"] {
       <p>Customer-safe planning page for a proposed read-only order-review pilot. The current proof uses simulated history and a curated reference. It does not provide live pricing, inventory, physical-color equivalence, order submission, measured savings, or customer acceptance.</p>
     </div>
   </footer>
+  <script>
+    (() => {
+      const player = document.querySelector("[data-demo-player]");
+      if (!player) return;
+
+      const steps = Array.from(player.querySelectorAll("[data-demo-step]"));
+      const scenes = Array.from(player.querySelectorAll("[data-demo-scene]"));
+      const playButton = player.querySelector("[data-demo-play]");
+      const progress = player.querySelector("[data-demo-progress]");
+      const progressLabel = player.querySelector("[data-demo-progress-label]");
+      const live = player.querySelector("[data-demo-live]");
+      const sceneNames = ["Ask", "Retrieve", "Compare", "Review"];
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let current = 0;
+      let timer = null;
+      let playing = false;
+
+      const stop = () => {
+        window.clearInterval(timer);
+        timer = null;
+        playing = false;
+        playButton.textContent = current === scenes.length - 1 ? "↻ Replay walkthrough" : "▶ Play walkthrough";
+        playButton.setAttribute("aria-pressed", "false");
+      };
+
+      const showScene = (index, focusStep = false) => {
+        current = (index + scenes.length) % scenes.length;
+        steps.forEach((step, stepIndex) => {
+          const active = stepIndex === current;
+          step.classList.toggle("is-active", active);
+          step.setAttribute("aria-selected", String(active));
+          step.tabIndex = active ? 0 : -1;
+        });
+        scenes.forEach((scene, sceneIndex) => {
+          const active = sceneIndex === current;
+          scene.classList.toggle("is-active", active);
+          scene.hidden = !active;
+        });
+        progress.style.width = `${((current + 1) / scenes.length) * 100}%`;
+        progressLabel.textContent = `Scene ${current + 1} of ${scenes.length}`;
+        live.textContent = `Scene ${current + 1} of ${scenes.length}: ${sceneNames[current]}`;
+        steps[current].scrollIntoView({
+          behavior: reducedMotion ? "auto" : "smooth",
+          block: "nearest",
+          inline: "nearest"
+        });
+        if (focusStep) steps[current].focus();
+      };
+
+      const advance = () => {
+        if (current === scenes.length - 1) {
+          stop();
+          return;
+        }
+        showScene(current + 1);
+      };
+
+      const start = () => {
+        if (current === scenes.length - 1) showScene(0);
+        playing = true;
+        playButton.textContent = "Ⅱ Pause walkthrough";
+        playButton.setAttribute("aria-pressed", "true");
+        timer = window.setInterval(advance, reducedMotion ? 9000 : 6500);
+      };
+
+      steps.forEach((step, index) => {
+        step.addEventListener("click", () => {
+          showScene(index);
+          if (playing) {
+            window.clearInterval(timer);
+            timer = window.setInterval(advance, reducedMotion ? 9000 : 6500);
+          }
+        });
+        step.addEventListener("keydown", (event) => {
+          if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+          event.preventDefault();
+          const target =
+            event.key === "Home" ? 0 :
+            event.key === "End" ? scenes.length - 1 :
+            current + (event.key === "ArrowRight" ? 1 : -1);
+          showScene(target, true);
+        });
+      });
+
+      playButton.addEventListener("click", () => {
+        if (playing) stop();
+        else start();
+      });
+    })();
+  </script>
 </body>
 </html>
