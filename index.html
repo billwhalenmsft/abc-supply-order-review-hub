@@ -291,6 +291,28 @@ html[data-theme="dark"] {
       background: var(--cp-surface);
     }
     .demo-intro p { margin: 0; color: var(--cp-text-soft); }
+    .demo-video-shell {
+      margin: 0;
+      overflow: hidden;
+      border: 0.0625rem solid var(--cp-border-strong);
+      border-radius: 1rem;
+      background: var(--cp-surface);
+      box-shadow: var(--cp-shadow);
+    }
+    .demo-video {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 960 / 578;
+      background: var(--cp-surface-soft);
+    }
+    .demo-video-shell figcaption {
+      padding: 0.85rem 1rem;
+      border-top: 0.0625rem solid var(--cp-border);
+      color: var(--cp-text-soft);
+      font-size: 0.85rem;
+    }
+    .demo-outcome-grid { margin-top: 1rem; }
     .demo-proof-badge,
     .demo-status {
       display: inline-flex;
@@ -936,7 +958,7 @@ html[data-theme="dark"] {
       <nav class="section-nav" aria-label="Page sections">
         <a href="#value">Value</a>
         <a href="#workflow">Workflow</a>
-        <a href="#demo">Visual demo</a>
+        <a href="#demo">Agent demo</a>
         <a href="#matching">Color matching</a>
         <a href="#output">Review packet</a>
         <a href="#measures">Pilot measures</a>
@@ -952,7 +974,7 @@ html[data-theme="dark"] {
       <h1 id="page-title">Turn prior-order history into a review-ready reorder without losing the details that matter.</h1>
       <p class="hero-summary">The proposed experience helps a seller find one exact prior order, reconstruct its product, material, color, quantity, and unit details, compare those details with a curated current reference, and prepare the next human review—without silently substituting a product or placing an order.</p>
       <p class="hero-summary"><strong>Decision now:</strong> validate a bounded, read-only repeat-order and product/color-review pilot with named owners and an agreed scorecard.</p>
-      <a class="cta-link" href="#demo">Watch the visual demo</a>
+      <a class="cta-link" href="#demo">Watch the real agent demo</a>
       <div class="meta-row">
         <dl class="meta-box"><dt>Seller outcome</dt><dd>Faster, more confident answers to repeat-order and repair questions</dd></dl>
         <dl class="meta-box"><dt>First module</dt><dd>Product, material, and recorded-color matching for prior orders</dd></dl>
@@ -1015,16 +1037,40 @@ html[data-theme="dark"] {
       <div class="wrap">
         <div class="section-head">
           <div>
-            <p class="eyebrow">SEE THE PREPARED EXPERIENCE</p>
-            <h2>Watch the seller move from a question to a human review packet</h2>
+            <p class="eyebrow">WATCH THE ACTUAL AGENT</p>
+            <h2>See the real Copilot Studio agent review one synthetic order line</h2>
           </div>
-          <p>This guided composite recreates states from two validated synthetic demo runs: exact line retrieval followed by a separately tested candidate comparison. It does not imply that one recording contained every scene or expose a private tenant.</p>
+          <p>This is a recording of the prepared ABC Order Review agent—not a reconstructed mockup. It uses synthetic order text and shows the real product and color review response.</p>
         </div>
         <div class="demo-intro">
-          <p><strong>What Dana and David should look for:</strong> Is this the right seller experience, and are these the right points for human validation?</p>
-          <span class="demo-proof-badge">Grounded in validated demo runs</span>
+          <p><strong>What Dana and David should validate:</strong> Is this the right seller experience, evidence boundary, and human handoff for a bounded pilot?</p>
+          <span class="demo-proof-badge">Recorded from the actual agent</span>
         </div>
-        <div class="demo-shell" data-demo-player>
+        <figure class="demo-video-shell">
+          <video class="demo-video" controls preload="metadata" playsinline poster="assets/abc-order-review-live-demo-poster.jpg" aria-label="Actual ABC Order Review agent demo">
+            <source src="assets/abc-order-review-live-demo.mp4" type="video/mp4">
+            <p>Your browser cannot play the embedded demo video.</p>
+          </video>
+          <figcaption>Actual Copilot Studio preview recorded September 30, 2026. The order line is synthetic; no customer order, price, stock, quote, reservation, or submission is shown.</figcaption>
+        </figure>
+        <div class="story-grid demo-outcome-grid">
+          <article class="story-card">
+            <p class="resource-kicker">1 | Supported</p>
+            <h3>Product and recorded color evidence</h3>
+            <p>The agent identifies the sourced product line, material, finish, named color, and preserves the requested quantity.</p>
+          </article>
+          <article class="story-card">
+            <p class="resource-kicker">2 | Confirm</p>
+            <h3>Configuration and availability gaps</h3>
+            <p>Size, texture, SKU, regional color availability, packaging, branch stock, and price remain explicit human checks.</p>
+          </article>
+          <article class="story-card">
+            <p class="resource-kicker">3 | Stop</p>
+            <h3>No-write next step</h3>
+            <p>The experience recommends quote and physical-sample confirmation without creating a quote, reservation, or order.</p>
+          </article>
+        </div>
+        <div class="demo-shell" data-demo-player hidden aria-hidden="true">
           <div class="demo-toolbar" aria-hidden="true">
             <div class="window-dots">
               <span class="window-dot"></span>
@@ -1202,7 +1248,7 @@ html[data-theme="dark"] {
             </div>
           </div>
         </div>
-        <figure class="setup-figure">
+        <figure class="setup-figure" hidden aria-hidden="true">
           <h3>What the prepared setup actually does</h3>
           <p>One bounded path keeps the seller experience useful while preserving the human and data boundaries that a pilot must validate.</p>
           <div class="setup-scroll">
@@ -1494,7 +1540,7 @@ html[data-theme="dark"] {
   </footer>
   <script>
     (() => {
-      const player = document.querySelector("[data-demo-player]");
+      const player = document.querySelector("[data-demo-player]:not([hidden])");
       if (!player) return;
 
       const steps = Array.from(player.querySelectorAll("[data-demo-step]"));
